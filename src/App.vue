@@ -1,5 +1,6 @@
 <script>
-// import MyComp from './components/MyComp.vue';
+import AppHeader from "./components/AppHeader.vue";
+import AppMain from "./components/AppMain.vue";
 import { store } from "./store/index.js";
 
 export default {
@@ -18,17 +19,14 @@ export default {
     // ...
   },
 
-  components: {},
-
-  created() {
-    // store.fetchMovies();
-    // ...
-  },
+  components: { AppHeader, AppMain },
 };
 </script>
 
 <template>
-  <input type="text" v-model="store.searchText" @input="store.fetchFilms()" />
+  <app-header />
+  <app-main />
+  <!-- <input type="text" v-model="store.searchText" @input="store.fetchFilms()" /> -->
 </template>
 
 <style lang="scss" scoped></style>
