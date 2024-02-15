@@ -22,6 +22,10 @@ export default {
     getPoster(film) {
       return `https://image.tmdb.org/t/p/w342/${film.poster_path}`;
     },
+
+    getVoteGradient(film) {
+      return `background: linear-gradient(to right, rgb(255, 255, 0) ${film.vote_average * 10}%, rgb(0, 0, 0) ${film.vote_average * 10}%); background-clip: text`;
+    },
   },
 };
 </script>
@@ -35,6 +39,7 @@ export default {
       <li>{{ film.original_language }}</li>
       <li><span :class="`fi fi-${lang(film.original_language)}`"></span></li>
       <li>{{ film.vote_average }}</li>
+      <li class="vote" :style="getVoteGradient(film)">★★★★★</li>
     </ul>
   </div>
 </template>
@@ -44,5 +49,11 @@ export default {
 
 .card {
   border: 1px solid black;
+}
+.vote {
+  color: transparent;
+  width: fit-content;
+
+  font-size: 3rem;
 }
 </style>

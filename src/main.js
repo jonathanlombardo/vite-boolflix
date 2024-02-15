@@ -6,8 +6,8 @@ import SearchBar from "./components/SearchBar.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 // FA import icon
-import { fas } from "@fortawesome/free-solid-svg-icons";
-library.add(fas);
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+library.add(faStar);
 
 const app = createApp(App);
 
