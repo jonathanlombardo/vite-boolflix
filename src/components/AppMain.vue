@@ -18,11 +18,10 @@ export default {
         return getLanguage(value).countryCode;
       }
     },
-  },
 
-  created() {
-    // console.log(getLanguage("en").ids.locale.split("-")[1].toLowerCase());
-    // console.log(getLanguage("en"));
+    getPoster(film) {
+      return `https://image.tmdb.org/t/p/w342/${film.poster_path}`;
+    },
   },
 };
 </script>
@@ -30,6 +29,7 @@ export default {
 <template>
   <div v-for="film in store.foundedFilms" class="card">
     <ul>
+      <li><img :src="getPoster(film)" alt="" /></li>
       <li>{{ film.title }}</li>
       <li>{{ film.original_title }}</li>
       <li>{{ film.original_language }}</li>

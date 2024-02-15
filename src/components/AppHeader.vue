@@ -10,7 +10,7 @@ export default {
 
   methods: {
     searchFilms(text) {
-      store.searchText = text;
+      store.tmdbQuary = text;
       store.fetchFilms();
     },
   },
