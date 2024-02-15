@@ -6,8 +6,8 @@ import SearchBar from "./components/SearchBar.vue";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 // FA import icon
-import { faStar } from "@fortawesome/free-solid-svg-icons";
-library.add(faStar);
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+library.add(faMagnifyingGlass);
 
 const app = createApp(App);
 

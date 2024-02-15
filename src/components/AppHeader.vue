@@ -1,11 +1,16 @@
 <script>
 import { store } from "../store/index.js";
+import AppLogo from "./AppLogo.vue";
 
 export default {
   data() {
     return {
       store,
     };
+  },
+
+  components: {
+    AppLogo,
   },
 
   methods: {
@@ -18,17 +23,18 @@ export default {
 </script>
 
 <template>
-  <header>
-    <div>logo</div>
-    <search-bar @searching="searchFilms" />
+  <header class="container">
+    <app-logo />
+    <search-bar @searching="searchFilms" class="searchbar" />
   </header>
 </template>
 
 <style lang="scss" scoped>
 header {
+  height: 80px;
   display: flex;
   justify-content: space-between;
-  padding: 50px;
-  border-bottom: 1px solid black;
+  align-items: center;
+  font-size: 1.5rem;
 }
 </style>

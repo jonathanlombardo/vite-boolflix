@@ -4,12 +4,6 @@
 import { getLanguage } from "language-flag-colors";
 
 export default {
-  data() {
-    return {
-      posterError: false,
-    };
-  },
-
   props: {
     film: Object,
   },
@@ -31,28 +25,21 @@ export default {
     getVoteGradient() {
       return `background: linear-gradient(to right, rgb(255, 255, 0) ${this.film.vote_average * 10}%, rgb(255, 255, 255) ${this.film.vote_average * 10}%); background-clip: text`;
     },
-
-    toggleImgError() {
-      this.posterError = true;
-    },
   },
-
-  components: {},
 };
 </script>
 
 <template>
   <div class="card">
-    <div v-if="!posterError"><img :src="getPoster()" alt="" @error="toggleImgError()" /></div>
-    <div v-else><img src="/img-not-found.png" alt="" /></div>
+    <div><img :src="getPoster()" alt="" onerror="this.src = '/img-not-found.png'" /></div>
+
     <div class="info-wrapper">
       <ul>
         <li>
           <strong>{{ film.title }}</strong>
         </li>
-        <li id="overview"><strong>Descrizione: </strong>{{ film.overview }}</li>
+        <li v-if="film.overview" id="overview"><strong>Descrizione: </strong>{{ film.overview }}</li>
         <li><strong>Titolo originale: </strong>{{ film.original_title }}</li>
-        <!-- <li><strong>Titolo:</strong>{{ film.original_language }}</li> -->
         <li><strong>Lingua: </strong><span :class="`fi fi-${lang()}`"></span></li>
         <li class="vote" :style="getVoteGradient()">★★★★★</li>
       </ul>

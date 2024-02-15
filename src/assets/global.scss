@@ -18,8 +18,9 @@ img {
 }
 
 .container {
-  max-width: 1900px;
-  padding: $space-s;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: $space-m;
 
   .row {
     display: flex;
