@@ -20,6 +20,10 @@ export default {
   },
 
   components: { AppHeader, AppMain },
+
+  created() {
+    // console.log(getLanguage("it").countryCode);
+  },
 };
 </script>
 
@@ -29,4 +33,4 @@ export default {
   <!-- <input type="text" v-model="store.searchText" @input="store.fetchFilms()" /> -->
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss"></style>
