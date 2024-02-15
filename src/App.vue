@@ -33,4 +33,6 @@ export default {
   <!-- <input type="text" v-model="store.searchText" @input="store.fetchFilms()" /> -->
 </template>
 
-<style lang="scss"></style>
+<style lang="scss">
+@use "./assets/global.scss";
+</style>

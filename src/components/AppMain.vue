@@ -18,13 +18,25 @@ export default {
 </script>
 
 <template>
-  <div class="row">
-    <FilmCard v-for="film in store.foundedFilms" :film="film" />
+  <div class="container">
+    <div class="row">
+      <div id="founded-films" v-for="film in store.foundedFilms" class="col">
+        <FilmCard :film="film" />
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
+@use "../assets/partials/var" as *;
+
 .row {
-  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  #founded-films {
+    padding-top: $space-m;
+    padding-bottom: $space-m;
+  }
 }
 </style>

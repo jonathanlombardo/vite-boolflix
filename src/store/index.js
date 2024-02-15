@@ -125,6 +125,6 @@ export const store = reactive({
       return b.popularity - a.popularity;
     });
 
-    console.log(this.foundedFilms);
+    // console.log(this.foundedFilms);
   },
 });
