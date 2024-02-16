@@ -51,7 +51,14 @@ export default {
 </template>
 
 <style lang="scss" scoped>
+@use "../assets/partials/var" as *;
+
 header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: $bg-color;
+  box-shadow: 0 20px 10px $bg-color;
   height: 80px;
   display: flex;
   justify-content: space-between;

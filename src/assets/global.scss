@@ -11,6 +11,16 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: $bg-color;
   color: #e4e4de;
+
+  height: 100vh;
+  overflow: hidden;
+}
+
+#app {
+  height: 100vh;
+  overflow: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #343434 #1b1b1b;
 }
 
 img {
@@ -18,7 +28,7 @@ img {
 }
 
 .container {
-  max-width: 1500px;
+  // max-width: 1500px;
   margin: 0 auto;
   padding: $space-m;
 
