@@ -84,6 +84,8 @@ export default {
 
   methods: {
     openFilm(film) {
+      store.fetchFilmCredits(film);
+      store.fetchFilmSimilar(film);
       store.filmOpened.film = film;
       store.filmOpened.show = true;
     },
@@ -139,7 +141,7 @@ export default {
   </div>
   <div v-else>
     <div class="container">
-      <film-overview />
+      <film-overview @filmClicked="openFilm" />
     </div>
   </div>
 </template>

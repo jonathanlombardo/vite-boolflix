@@ -53,6 +53,7 @@ export default {
       }
 
       store.tmdbQuary = "";
+      window.scrollTo(0, 0);
 
       this.searchRandering = false;
       await this.$nextTick();

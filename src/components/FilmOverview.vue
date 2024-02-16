@@ -1,5 +1,7 @@
 <script>
 // import MyComp from './components/MyComp.vue';
+import FilmCard from "./FilmCard.vue";
+
 import { store } from "../store/index.js";
 import { getLanguage } from "language-flag-colors";
 
@@ -10,9 +12,7 @@ export default {
     };
   },
 
-  props: {
-    // ...
-  },
+  emits: ["filmClicked"],
 
   methods: {
     lang() {
@@ -31,9 +31,13 @@ export default {
     getVoteGradient() {
       return `background: linear-gradient(to right, rgb(255, 255, 0) ${store.filmOpened.film.vote_average * 10}%, rgb(255, 255, 255) ${store.filmOpened.film.vote_average * 10}%); background-clip: text`;
     },
+
+    handleCardClick(film) {
+      this.$emit("filmClicked", film);
+    },
   },
 
-  components: {},
+  components: { FilmCard },
 
   created() {
     // ...
@@ -55,6 +59,31 @@ export default {
       </ul>
     </div>
   </figure>
+  <p v-if="store.filmOpened.cast.length">
+    CAST:
+    <span v-for="actor in store.filmOpened.cast">
+      <span v-show="actor.name">{{ actor.name }}</span>
+      {{ " " }}<span v-show="actor.character">({{ actor.character }})</span>
+    </span>
+  </p>
+  <p v-if="store.filmOpened.crew.length">
+    CREW:
+    <span v-for="member in store.filmOpened.crew">
+      <span v-show="member.name">{{ member.name }}</span>
+      {{ " " }}<span v-show="member.role">({{ member.role }})</span>
+    </span>
+  </p>
+
+  <p>Titolo originale: {{ store.filmOpened.film.original_title }}</p>
+
+  <div v-if="store.filmOpened.similar.length">
+    <h2>Contenuti Simili</h2>
+    <div class="row nowrap">
+      <div v-for="film in store.filmOpened.similar" class="col founded-film">
+        <FilmCard @click="handleCardClick(film)" :film="film" :key="film.id" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -120,6 +149,34 @@ figure {
       //     // margin-top: auto;
       //   }
     }
+  }
+}
+p {
+  font-style: italic;
+  filter: brightness(0.6);
+  max-width: 940px;
+  margin-top: $space-m;
+
+  > span:not(:last-child)::after {
+    content: ", ";
+  }
+}
+
+h2 {
+  margin-top: calc($space-m * 2);
+}
+
+.row.nowrap {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 5px;
+  margin-bottom: $space-m;
+  margin-top: $space-m;
+  scrollbar-width: thin;
+  scrollbar-color: #343434 #1b1b1b;
+
+  &:hover {
+    scrollbar-color: #575757 #1b1b1b;
   }
 }
 </style>
