@@ -38,7 +38,7 @@ export default {
         <li>
           <strong>{{ film.title }}</strong>
         </li>
-        <li v-if="film.overview" id="overview"><strong>Descrizione: </strong>{{ film.overview }}</li>
+        <li v-if="film.overview" class="overview"><strong>Descrizione: </strong>{{ film.overview }}</li>
         <li><strong>Titolo originale: </strong>{{ film.original_title }}</li>
         <li><strong>Lingua: </strong><span :class="`fi fi-${lang()}`"></span></li>
         <li class="vote" :style="getVoteGradient()">★★★★★</li>
@@ -101,7 +101,7 @@ export default {
           font-size: 3rem;
         }
 
-        &#overview {
+        &.overview {
           display: -webkit-box;
           //   max-width: 200px;
           -webkit-line-clamp: 7;

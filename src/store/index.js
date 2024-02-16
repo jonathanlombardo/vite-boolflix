@@ -31,6 +31,11 @@ export const store = reactive({
 
   isLoading: false,
 
+  filmOpened: {
+    film: {},
+    show: false,
+  },
+
   filter: {
     serie: false,
     movie: false,
@@ -53,6 +58,7 @@ export const store = reactive({
         .then((response) => {
           this.foundedMovies = response.data.results.map((movie) => {
             return {
+              id: movie.id,
               adult: movie.adult,
               backdrop_path: movie.backdrop_path,
               poster_path: movie.poster_path,
@@ -100,6 +106,7 @@ export const store = reactive({
         .then((response) => {
           this.foundedSeries = response.data.results.map((serie) => {
             return {
+              id: serie.id,
               adult: serie.adult,
               backdrop_path: serie.backdrop_path,
               poster_path: serie.poster_path,
@@ -169,6 +176,7 @@ export const store = reactive({
         .then((response) => {
           this.popSeries = response.data.results.map((serie) => {
             return {
+              id: serie.id,
               adult: serie.adult,
               backdrop_path: serie.backdrop_path,
               poster_path: serie.poster_path,
@@ -210,6 +218,7 @@ export const store = reactive({
         .then((response) => {
           this.popMovies = response.data.results.map((movie) => {
             return {
+              id: movie.id,
               adult: movie.adult,
               backdrop_path: movie.backdrop_path,
               poster_path: movie.poster_path,
@@ -275,6 +284,7 @@ export const store = reactive({
         .then((response) => {
           this.newSeries = response.data.results.map((serie) => {
             return {
+              id: serie.id,
               adult: serie.adult,
               backdrop_path: serie.backdrop_path,
               poster_path: serie.poster_path,
@@ -316,6 +326,7 @@ export const store = reactive({
         .then((response) => {
           this.newMovies = response.data.results.map((movie) => {
             return {
+              id: movie.id,
               adult: movie.adult,
               backdrop_path: movie.backdrop_path,
               poster_path: movie.poster_path,
@@ -381,6 +392,7 @@ export const store = reactive({
         .then((response) => {
           this.lovedSeries = response.data.results.map((serie) => {
             return {
+              id: serie.id,
               adult: serie.adult,
               backdrop_path: serie.backdrop_path,
               poster_path: serie.poster_path,
@@ -426,6 +438,7 @@ export const store = reactive({
         .then((response) => {
           this.lovedMovies = response.data.results.map((movie) => {
             return {
+              id: movie.id,
               adult: movie.adult,
               backdrop_path: movie.backdrop_path,
               poster_path: movie.poster_path,

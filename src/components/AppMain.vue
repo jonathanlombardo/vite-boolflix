@@ -1,5 +1,6 @@
 <script>
 import FilmCard from "./FilmCard.vue";
+import FilmOverview from "./FilmOverview.vue";
 import { store } from "../store/index.js";
 
 export default {
@@ -35,10 +36,13 @@ export default {
     },
   },
 
-  components: { FilmCard },
+  components: { FilmCard, FilmOverview },
 
   methods: {
-    // ...
+    openFilm(film) {
+      store.filmOpened.film = film;
+      store.filmOpened.show = true;
+    },
   },
 
   created() {
@@ -50,35 +54,42 @@ export default {
 </script>
 
 <template>
-  <div class="container">
-    <h1 v-if="!store.tmdbQuary && store.isLoading">Loading...</h1>
-  </div>
-  <div v-if="store.tmdbQuary" class="container">
-    <h2 v-if="!filterFoundedFilms.length && !store.isLoading">Nessun risultato</h2>
-    <div class="row wrap">
-      <div v-for="film in filterFoundedFilms" class="col founded-film">
-        <FilmCard :film="film" />
+  <div v-if="!store.filmOpened.show">
+    <div v-if="!store.tmdbQuary && store.isLoading" class="container">
+      <h1>Loading...</h1>
+    </div>
+    <div v-if="store.tmdbQuary" class="container">
+      <h2 v-if="!filterFoundedFilms.length && !store.isLoading">Nessun risultato</h2>
+      <div class="row wrap">
+        <div v-for="film in filterFoundedFilms" class="col founded-film">
+          <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+        </div>
+      </div>
+    </div>
+    <div v-else-if="!store.isLoading" class="container">
+      <h2>Popolari su netflix</h2>
+      <div class="row nowrap">
+        <div v-for="film in filterPopFilms" class="col founded-film">
+          <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+        </div>
+      </div>
+      <h2>Novità su netflix</h2>
+      <div class="row nowrap">
+        <div v-for="film in filterNewFilms" class="col founded-film">
+          <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+        </div>
+      </div>
+      <h2>I più votati</h2>
+      <div class="row nowrap">
+        <div v-for="film in filterLovedFilms" class="col founded-film">
+          <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+        </div>
       </div>
     </div>
   </div>
-  <div v-else-if="!store.isLoading" class="container">
-    <h2>Popolari su netflix</h2>
-    <div class="row nowrap">
-      <div v-for="film in filterPopFilms" class="col founded-film">
-        <FilmCard :film="film" />
-      </div>
-    </div>
-    <h2>Novità su netflix</h2>
-    <div class="row nowrap">
-      <div v-for="film in filterNewFilms" class="col founded-film">
-        <FilmCard :film="film" />
-      </div>
-    </div>
-    <h2>I più votati</h2>
-    <div class="row nowrap">
-      <div v-for="film in filterLovedFilms" class="col founded-film">
-        <FilmCard :film="film" />
-      </div>
+  <div v-else>
+    <div class="container">
+      <film-overview />
     </div>
   </div>
 </template>
