@@ -12,41 +12,19 @@ export default {
   components: {
     AppLogo,
   },
-
-  methods: {
-    searchFilms(text) {
-      store.tmdbQuary = text;
-      store.fetchFilms();
-    },
-
-    handleClickHome() {
-      store.filter.serie = false;
-      store.filter.movie = false;
-      store.tmdbQuary = "";
-    },
-
-    handleClickSerie() {
-      store.filter.serie = true;
-      store.filter.movie = false;
-    },
-
-    handleClickMovie() {
-      store.filter.serie = false;
-      store.filter.movie = true;
-    },
-  },
 };
 </script>
 
 <template>
-  <header class="container">
-    <div class="menu">
-      <app-logo class="logo" />
-      <div @click="handleClickHome()" class="menu-opt" :class="!store.filter.serie && !store.filter.movie ? 'active' : ''">Home</div>
-      <div @click="handleClickSerie()" class="menu-opt" :class="store.filter.serie ? 'active' : ''">Serie Tv</div>
-      <div @click="handleClickMovie()" class="menu-opt" :class="store.filter.movie ? 'active' : ''">Film</div>
+  <header>
+    <div class="container">
+      <div class="menu">
+        <app-logo class="logo" />
+        <slot name="menuOpt"></slot>
+      </div>
+      <slot name="asideControl"></slot>
     </div>
-    <search-bar @searching="searchFilms" class="searchbar" />
+    <slot name="filterBar"></slot>
   </header>
 </template>
 
@@ -59,31 +37,22 @@ header {
   z-index: 1;
   background-color: $bg-color;
   box-shadow: 0 20px 10px $bg-color;
-  height: 80px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
   font-size: 1.5rem;
 
-  .menu {
+  .container {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 30px;
-    height: 100%;
-    font-size: 1.2rem;
-    .logo {
-      margin-right: 20px;
-    }
+    height: 80px;
 
-    .menu-opt {
-      color: #575757;
-      cursor: pointer;
-      // height: 100%;
-      line-height: 50px;
-
-      &.active {
-        color: white;
-        box-shadow: 0 5px 0 white;
+    .menu {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      height: 100%;
+      font-size: 1.2rem;
+      .logo {
+        margin-right: 20px;
       }
     }
   }

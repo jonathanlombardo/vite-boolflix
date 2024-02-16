@@ -12,27 +12,71 @@ export default {
 
   computed: {
     filterFoundedFilms() {
-      if (store.filter.serie) return store.foundedSeries;
-      if (store.filter.movie) return store.foundedMovies;
-      return store.foundedFilms;
+      let filteredFilms;
+      if (store.filter.serie) {
+        filteredFilms = store.foundedSeries;
+      } else if (store.filter.movie) {
+        filteredFilms = store.foundedMovies;
+      } else {
+        filteredFilms = store.foundedFilms;
+      }
+
+      if (!store.filter.genreID) return filteredFilms;
+
+      return filteredFilms.filter((film) => {
+        return film.genreIds.includes(store.filter.genreID);
+      });
     },
 
     filterPopFilms() {
-      if (store.filter.serie) return store.popSeries;
-      if (store.filter.movie) return store.popMovies;
-      return store.popFilms;
+      let filteredFilms;
+      if (store.filter.serie) {
+        filteredFilms = store.popSeries;
+      } else if (store.filter.movie) {
+        filteredFilms = store.popMovies;
+      } else {
+        filteredFilms = store.popFilms;
+      }
+
+      if (!store.filter.genreID) return filteredFilms;
+
+      return filteredFilms.filter((film) => {
+        return film.genreIds.includes(store.filter.genreID);
+      });
     },
 
     filterNewFilms() {
-      if (store.filter.serie) return store.newSeries;
-      if (store.filter.movie) return store.newMovies;
-      return store.newFilms;
+      let filteredFilms;
+      if (store.filter.serie) {
+        filteredFilms = store.newSeries;
+      } else if (store.filter.movie) {
+        filteredFilms = store.newMovies;
+      } else {
+        filteredFilms = store.newFilms;
+      }
+
+      if (!store.filter.genreID) return filteredFilms;
+
+      return filteredFilms.filter((film) => {
+        return film.genreIds.includes(store.filter.genreID);
+      });
     },
 
     filterLovedFilms() {
-      if (store.filter.serie) return store.lovedFilms;
-      if (store.filter.movie) return store.lovedMovies;
-      return store.lovedFilms;
+      let filteredFilms;
+      if (store.filter.serie) {
+        filteredFilms = store.lovedFilms;
+      } else if (store.filter.movie) {
+        filteredFilms = store.lovedMovies;
+      } else {
+        filteredFilms = store.lovedFilms;
+      }
+
+      if (!store.filter.genreID) return filteredFilms;
+
+      return filteredFilms.filter((film) => {
+        return film.genreIds.includes(store.filter.genreID);
+      });
     },
   },
 
@@ -67,22 +111,28 @@ export default {
       </div>
     </div>
     <div v-else-if="!store.isLoading" class="container">
-      <h2>Popolari su netflix</h2>
-      <div class="row nowrap">
-        <div v-for="film in filterPopFilms" class="col founded-film">
-          <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+      <div v-if="filterPopFilms.length">
+        <h2>Popolari su netflix</h2>
+        <div class="row nowrap">
+          <div v-for="film in filterPopFilms" class="col founded-film">
+            <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+          </div>
         </div>
       </div>
-      <h2>Novità su netflix</h2>
-      <div class="row nowrap">
-        <div v-for="film in filterNewFilms" class="col founded-film">
-          <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+      <div v-if="filterNewFilms.length">
+        <h2>Novità su netflix</h2>
+        <div class="row nowrap">
+          <div v-for="film in filterNewFilms" class="col founded-film">
+            <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+          </div>
         </div>
       </div>
-      <h2>I più votati</h2>
-      <div class="row nowrap">
-        <div v-for="film in filterLovedFilms" class="col founded-film">
-          <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+      <div v-if="filterLovedFilms.length">
+        <h2>I più votati</h2>
+        <div class="row nowrap">
+          <div v-for="film in filterLovedFilms" class="col founded-film">
+            <FilmCard @click="openFilm(film)" :film="film" :key="film.id" />
+          </div>
         </div>
       </div>
     </div>

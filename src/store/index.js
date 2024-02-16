@@ -29,6 +29,10 @@ export const store = reactive({
   lovedMovies: [],
   lovedFilms: [],
 
+  genresSeries: [],
+  genresMovies: [],
+  genresFilms: [],
+
   isLoading: false,
 
   filmOpened: {
@@ -39,6 +43,8 @@ export const store = reactive({
   filter: {
     serie: false,
     movie: false,
+    genreID: false,
+    showGenres: false,
   },
 
   async fetchMovies() {
@@ -59,6 +65,7 @@ export const store = reactive({
           this.foundedMovies = response.data.results.map((movie) => {
             return {
               id: movie.id,
+              genreIds: movie.genre_ids,
               adult: movie.adult,
               backdrop_path: movie.backdrop_path,
               poster_path: movie.poster_path,
@@ -107,6 +114,7 @@ export const store = reactive({
           this.foundedSeries = response.data.results.map((serie) => {
             return {
               id: serie.id,
+              genreIds: serie.genre_ids,
               adult: serie.adult,
               backdrop_path: serie.backdrop_path,
               poster_path: serie.poster_path,
@@ -177,6 +185,7 @@ export const store = reactive({
           this.popSeries = response.data.results.map((serie) => {
             return {
               id: serie.id,
+              genreIds: serie.genre_ids,
               adult: serie.adult,
               backdrop_path: serie.backdrop_path,
               poster_path: serie.poster_path,
@@ -219,6 +228,7 @@ export const store = reactive({
           this.popMovies = response.data.results.map((movie) => {
             return {
               id: movie.id,
+              genreIds: movie.genre_ids,
               adult: movie.adult,
               backdrop_path: movie.backdrop_path,
               poster_path: movie.poster_path,
@@ -285,6 +295,7 @@ export const store = reactive({
           this.newSeries = response.data.results.map((serie) => {
             return {
               id: serie.id,
+              genreIds: serie.genre_ids,
               adult: serie.adult,
               backdrop_path: serie.backdrop_path,
               poster_path: serie.poster_path,
@@ -327,6 +338,7 @@ export const store = reactive({
           this.newMovies = response.data.results.map((movie) => {
             return {
               id: movie.id,
+              genreIds: movie.genre_ids,
               adult: movie.adult,
               backdrop_path: movie.backdrop_path,
               poster_path: movie.poster_path,
@@ -393,6 +405,7 @@ export const store = reactive({
           this.lovedSeries = response.data.results.map((serie) => {
             return {
               id: serie.id,
+              genreIds: serie.genre_ids,
               adult: serie.adult,
               backdrop_path: serie.backdrop_path,
               poster_path: serie.poster_path,
@@ -439,6 +452,7 @@ export const store = reactive({
           this.lovedMovies = response.data.results.map((movie) => {
             return {
               id: movie.id,
+              genreIds: movie.genre_ids,
               adult: movie.adult,
               backdrop_path: movie.backdrop_path,
               poster_path: movie.poster_path,
@@ -486,6 +500,82 @@ export const store = reactive({
 
     this.lovedFilms.sort((a, b) => {
       return b.vote_average - a.vote_average;
+    });
+
+    this.isLoading = false;
+
+    // console.log(this.popFilms);
+  },
+
+  async fetchGenreMovies() {
+    return new Promise((resolve) => {
+      const config = {
+        method: "get",
+        maxBodyLength: Infinity,
+        url: `${tmdbApiUri}/genre/movie/list?include_adult=${this.isAdult}&language=${this.lang}`,
+        headers: {
+          Authorization: `Bearer ${tmdbApiToken}`,
+        },
+      };
+
+      axios
+        .request(config)
+        .then((response) => {
+          this.genresMovies = response.data.genres;
+
+          resolve();
+        })
+        .catch((error) => {
+          resolve(console.error("La chiamata axios ha riportato: ", error));
+        })
+        .finally(() => {
+          resolve();
+        });
+    });
+  },
+
+  async fetchGenreSeries() {
+    return new Promise((resolve) => {
+      const config = {
+        method: "get",
+        maxBodyLength: Infinity,
+        url: `${tmdbApiUri}/genre/tv/list?include_adult=${this.isAdult}&language=${this.lang}`,
+        headers: {
+          Authorization: `Bearer ${tmdbApiToken}`,
+        },
+      };
+
+      axios
+        .request(config)
+        .then((response) => {
+          this.genresSeries = response.data.genres;
+
+          resolve();
+        })
+        .catch((error) => {
+          resolve(console.error("La chiamata axios ha riportato: ", error));
+        })
+        .finally(() => {
+          resolve();
+        });
+    });
+  },
+
+  async fetchGenreFilms() {
+    this.isLoading = true;
+
+    await this.fetchGenreMovies();
+    await this.fetchGenreSeries();
+
+    this.genresFilms = [];
+
+    this.genresMovies.forEach((genre) => {
+      this.genresFilms.push(genre);
+    });
+
+    this.genresSeries.forEach((genre) => {
+      const genreAlreadyExist = this.genresFilms.map((genre) => genre.id);
+      if (!genreAlreadyExist.includes(genre.id)) this.genresFilms.push(genre);
     });
 
     this.isLoading = false;
